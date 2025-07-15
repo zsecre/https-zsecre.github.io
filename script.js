@@ -53,7 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const prevButton = document.createElement('button');
             prevButton.textContent = 'Previous';
             prevButton.addEventListener('click', () => {
-                fetchAnime(`${apiUrl}?page=${currentPage - 1}`);
+                if (currentSearchTerm) {
+                    fetchAnime(`https://consumet-api-two-nu.vercel.app/meta/anilist/${currentSearchTerm}?page=${currentPage - 1}`);
+                } else {
+                    fetchAnime(`${apiUrl}?page=${currentPage - 1}`);
+                }
             });
             pagination.appendChild(prevButton);
         }
@@ -62,16 +66,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const nextButton = document.createElement('button');
             nextButton.textContent = 'Next';
             nextButton.addEventListener('click', () => {
-                fetchAnime(`${apiUrl}?page=${currentPage + 1}`);
+                if (currentSearchTerm) {
+                    fetchAnime(`https://consumet-api-two-nu.vercel.app/meta/anilist/${currentSearchTerm}?page=${currentPage + 1}`);
+                } else {
+                    fetchAnime(`${apiUrl}?page=${currentPage + 1}`);
+                }
             });
             pagination.appendChild(nextButton);
         }
     }
 
+    let currentSearchTerm = '';
+
     searchButton.addEventListener('click', () => {
         const searchTerm = searchInput.value.trim();
         if (searchTerm) {
-            const searchUrl = `https://consumet-api-two-nu.vercel.app/meta/anilist/${searchTerm}`;
+            currentSearchTerm = searchTerm;
+            const searchUrl = `https://consumet-api-two-nu.vercel.app/meta/anilist/${currentSearchTerm}`;
             fetchAnime(searchUrl);
         }
     });
