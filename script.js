@@ -1,91 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('searchInput');
-    const searchButton = document.getElementById('searchButton');
-    const animeList = document.getElementById('animeList');
-    const pagination = document.getElementById('pagination');
+    const gridContainer = document.getElementById('grid-container');
+    const spinButton = document.getElementById('spin-button');
+    const prizeModal = document.getElementById('prize-modal');
+    const prizeWon = document.getElementById('prize-won');
+    const closeButton = document.querySelector('.close-button');
 
-    let currentPage = 1;
-    let hasNextPage = true;
-
-    const apiUrl = 'https://consumet-api-two-nu.vercel.app/meta/anilist/popular';
-
-    async function fetchAnime(url) {
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            displayAnime(data.results);
-            currentPage = data.currentPage;
-            hasNextPage = data.hasNextPage;
-            setupPagination();
-        } catch (error) {
-            console.error('Error fetching anime:', error);
+    const prizes = [];
+    for (let i = 1; i <= 25; i++) {
+        if (i === 13) {
+            prizes.push('1163');
+        } else if (i % 2 === 0) {
+            prizes.push('Better luck next time');
+        } else if (i % 5 === 0) {
+            prizes.push('112');
+        } else {
+            prizes.push('5');
         }
     }
 
-    function displayAnime(animeData) {
-        animeList.innerHTML = '';
-        animeData.forEach(anime => {
-            const animeCard = document.createElement('div');
-            animeCard.classList.add('anime-card');
-
-            const animeImage = document.createElement('img');
-            animeImage.src = anime.image;
-            animeImage.alt = anime.title.romaji;
-
-            const animeTitle = document.createElement('h3');
-            animeTitle.textContent = anime.title.romaji;
-
-            animeCard.appendChild(animeImage);
-            animeCard.appendChild(animeTitle);
-
-            animeCard.addEventListener('click', () => {
-                window.location.href = `watch.html?id=${anime.id}`;
-            });
-
-            animeList.appendChild(animeCard);
-        });
-    }
-
-    function setupPagination() {
-        pagination.innerHTML = '';
-
-        if (currentPage > 1) {
-            const prevButton = document.createElement('button');
-            prevButton.textContent = 'Previous';
-            prevButton.addEventListener('click', () => {
-                if (currentSearchTerm) {
-                    fetchAnime(`https://consumet-api-two-nu.vercel.app/meta/anilist/${currentSearchTerm}?page=${currentPage - 1}`);
-                } else {
-                    fetchAnime(`${apiUrl}?page=${currentPage - 1}`);
-                }
-            });
-            pagination.appendChild(prevButton);
-        }
-
-        if (hasNextPage) {
-            const nextButton = document.createElement('button');
-            nextButton.textContent = 'Next';
-            nextButton.addEventListener('click', () => {
-                if (currentSearchTerm) {
-                    fetchAnime(`https://consumet-api-two-nu.vercel.app/meta/anilist/${currentSearchTerm}?page=${currentPage + 1}`);
-                } else {
-                    fetchAnime(`${apiUrl}?page=${currentPage + 1}`);
-                }
-            });
-            pagination.appendChild(nextButton);
+    function createGrid() {
+        for (let i = 0; i < 25; i++) {
+            const item = document.createElement('div');
+            item.classList.add('grid-item');
+            item.textContent = prizes[i];
+            gridContainer.appendChild(item);
         }
     }
 
-    let currentSearchTerm = '';
+    async function spin() {
+        spinButton.disabled = true;
+        const squares = Array.from(document.querySelectorAll('.grid-item'));
+        const winningIndex = Math.floor(Math.random() * 25);
+        const winningPrize = prizes[winningIndex];
 
-    searchButton.addEventListener('click', () => {
-        const searchTerm = searchInput.value.trim();
-        if (searchTerm) {
-            currentSearchTerm = searchTerm;
-            const searchUrl = `https://consumet-api-two-nu.vercel.app/meta/anilist/${currentSearchTerm}`;
-            fetchAnime(searchUrl);
+        let currentIndex = 0;
+        const interval = setInterval(() => {
+            squares.forEach(square => square.classList.remove('active'));
+            squares[currentIndex].classList.add('active');
+            currentIndex = (currentIndex + 1) % 25;
+        }, 100);
+
+        setTimeout(() => {
+            clearInterval(interval);
+            squares.forEach(square => square.classList.remove('active'));
+            squares[winningIndex].classList.add('active');
+            setTimeout(() => {
+                prizeWon.textContent = winningPrize;
+                prizeModal.style.display = 'block';
+                spinButton.disabled = false;
+            }, 1000);
+        }, 3000);
+    }
+
+    spinButton.addEventListener('click', spin);
+
+    closeButton.addEventListener('click', () => {
+        prizeModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == prizeModal) {
+            prizeModal.style.display = 'none';
         }
     });
 
-    fetchAnime(apiUrl);
+    createGrid();
 });
