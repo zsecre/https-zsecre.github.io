@@ -2,9 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridContainer = document.getElementById('grid-container');
     const spinButton = document.getElementById('spin-button');
     const prizeModal = document.getElementById('prize-modal');
-    const prizeWon = document.getElementById('prize-won');
-    const closeButton = document.querySelector('.close-button');
     const prizeMessage = document.getElementById('prize-message');
+    const closeButton = document.querySelector('.close-button');
 
     const prizes = [];
     for (let i = 1; i <= 25; i++) {
@@ -47,9 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
             squares[winningIndex].classList.add('active');
             setTimeout(() => {
                 if (winningPrize === 'Better luck next time') {
-                    prizeWon.textContent = winningPrize;
+                    prizeMessage.textContent = winningPrize;
                 } else {
-                    prizeWon.textContent = `You won ${winningPrize} diamonds!`;
+                    prizeMessage.textContent = `You won ${winningPrize} diamonds!`;
                 }
                 prizeModal.style.display = 'block';
                 spinButton.disabled = false;
