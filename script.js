@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mlbbIdInput = document.getElementById('mlbb-id');
     const zoneIdInput = document.getElementById('zone-id');
     const userIcon = document.getElementById('user-icon');
+    const spinChanceDisplay = document.getElementById('spin-chance');
 
     let currentUser = null;
 
@@ -53,8 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateUserStatus() {
         if (currentUser) {
             userIcon.style.color = '#4CAF50'; // Green when logged in
+            spinChanceDisplay.textContent = `Spins left: ${currentUser.spinChance}`;
         } else {
             userIcon.style.color = 'white'; // Default color
+            spinChanceDisplay.textContent = '';
         }
     }
 
@@ -63,16 +66,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const zoneId = zoneIdInput.value.trim();
 
         if (mlbbId && zoneId) {
-            db.collection('users').doc(mlbbId).set({
-                zoneId: zoneId
-            })
-            .then(() => {
-                currentUser = { mlbbId, zoneId };
+            const userRef = db.collection('users').doc(mlbbId);
+            userRef.get().then((doc) => {
+                if (doc.exists) {
+                    currentUser = doc.data();
+                    currentUser.mlbbId = mlbbId;
+                } else {
+                    currentUser = {
+                        mlbbId: mlbbId,
+                        zoneId: zoneId,
+                        spinChance: 3,
+                        history: []
+                    };
+                    userRef.set(currentUser);
+                }
                 loginModal.style.display = 'none';
                 updateUserStatus();
-            })
-            .catch((error) => {
-                console.error("Error writing document: ", error);
+            }).catch((error) => {
+                console.error("Error getting document:", error);
             });
         } else {
             alert('Please enter a valid MLBB ID and Zone ID.');
@@ -82,16 +93,36 @@ document.addEventListener('DOMContentLoaded', () => {
     spinButton.addEventListener('click', () => {
         if (!currentUser) {
             loginModal.style.display = 'block';
-        } else {
+        } else if (currentUser.spinChance > 0) {
             spin();
+        } else {
+            alert('You have no spins left!');
         }
     });
 
     async function spin() {
         spinButton.disabled = true;
+        currentUser.spinChance--;
         const squares = Array.from(document.querySelectorAll('.grid-item'));
         const winningIndex = Math.floor(Math.random() * 25);
         const winningPrize = prizes[winningIndex];
+
+        const historyEntry = {
+            result: winningPrize,
+            date: new Date().toISOString()
+        };
+
+        currentUser.history.unshift(historyEntry);
+        if (currentUser.history.length > 5) {
+            currentUser.history.pop();
+        }
+
+        db.collection('users').doc(currentUser.mlbbId).update({
+            spinChance: currentUser.spinChance,
+            history: currentUser.history
+        });
+
+        updateUserStatus();
 
         let currentIndex = 0;
         const interval = setInterval(() => {

@@ -14,9 +14,19 @@ header {
     color: white;
 }
 
+.user-status {
+    display: flex;
+    align-items: center;
+}
+
 .user-status i {
     font-size: 2rem;
     cursor: pointer;
+}
+
+#spin-chance {
+    margin-left: 10px;
+    font-size: 1.2rem;
 }
 
 .game-container {
