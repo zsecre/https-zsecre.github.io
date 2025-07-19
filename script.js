@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const mlbbId = mlbbIdInput.value.trim();
         const zoneId = zoneIdInput.value.trim();
 
-        if (mlbbId && zoneId && /^\d+$/.test(mlbbId) && /^\d+$/.test(zoneId)) {
+        if (mlbbId && zoneId) {
             db.collection('users').doc(mlbbId).set({
                 zoneId: zoneId
             })
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Error writing document: ", error);
             });
         } else {
-            alert('Please enter a valid MLBB ID and Zone ID (numbers only).');
+            alert('Please enter a valid MLBB ID and Zone ID.');
         }
     });
 
