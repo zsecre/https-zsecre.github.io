@@ -4,12 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mobile Legends Diamond Spin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Mobile Legends Diamond Spin</h1>
-    <div class="grid-container" id="grid-container"></div>
-    <button id="spin-button">Spin</button>
+    <header>
+        <div class="user-status">
+            <i class="fas fa-user-circle" id="user-icon"></i>
+        </div>
+    </header>
+
+    <div class="game-container">
+        <h1>Mobile Legends Diamond Spin</h1>
+        <div class="grid-container" id="grid-container"></div>
+        <button id="spin-button">Spin</button>
+    </div>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h2>Login</h2>
+            <input type="text" id="mlbb-id" placeholder="MLBB ID (numbers only)" pattern="[0-9]*">
+            <input type="text" id="zone-id" placeholder="Zone ID (numbers only)" pattern="[0-9]*">
+            <button id="login-button">Login</button>
+        </div>
+    </div>
 
     <div id="prize-modal" class="modal">
         <div class="modal-content">
@@ -19,6 +37,8 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
