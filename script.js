@@ -38,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const prizes = [];
     for (let i = 1; i <= 25; i++) {
         if (i === 13) {
-            prizes.push('1163');
+            prizes.push({value: '1163', image: 'https://cdn1.codashop.com/S/content/common/images/denom-image/MLBB/150x150/1000_MLBB_NewDemom.png'});
         } else if (i % 2 === 0) {
-            prizes.push('X');
+            prizes.push({value: 'X'});
         } else if (i % 5 === 0) {
-            prizes.push('112');
+            prizes.push({value: '112', image: 'https://cdn1.codashop.com/S/content/common/images/denom-image/MLBB/150x150/50_MLBB_NewDemom.png'});
         } else {
-            prizes.push('5');
+            prizes.push({value: '5', image: 'https://cdn1.codashop.com/S/content/common/images/denom-image/MLBB/150x150/10_MLBB_NewDemom.png'});
         }
     }
 
@@ -52,9 +52,16 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < 25; i++) {
             const item = document.createElement('div');
             item.classList.add('grid-item');
-            item.textContent = prizes[i];
-            if (prizes[i] === 'X') {
+            if (prizes[i].value === 'X') {
+                item.textContent = 'X';
                 item.classList.add('x-prize');
+            } else {
+                const img = document.createElement('img');
+                img.src = prizes[i].image;
+                item.appendChild(img);
+                const p = document.createElement('p');
+                p.innerHTML = `<b>${prizes[i].value} Diamonds</b>`;
+                item.appendChild(p);
             }
             gridContainer.appendChild(item);
         }
@@ -134,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUser.spinChance--;
         const squares = Array.from(document.querySelectorAll('.grid-item'));
         const winningIndex = Math.floor(Math.random() * 25);
-        const winningPrize = prizes[winningIndex];
+        const winningPrize = prizes[winningIndex].value;
 
         const historyEntry = {
             result: winningPrize,
