@@ -38,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const prizes = [];
     for (let i = 1; i <= 25; i++) {
         if (i === 13) {
-            prizes.push({value: '1163', image: 'https://cdn1.codashop.com/S/content/common/images/denom-image/MLBB/150x150/1000_MLBB_NewDemom.png'});
+            prizes.push({value: '1163', image: 'https://raw.githubusercontent.com/zsecre/https-zsecre.github.io/refs/heads/diamond-spin-game/Untitled92_20250721071457.png'});
         } else if (i % 2 === 0) {
             prizes.push({value: 'X'});
         } else if (i % 5 === 0) {
-            prizes.push({value: '112', image: 'https://cdn1.codashop.com/S/content/common/images/denom-image/MLBB/150x150/50_MLBB_NewDemom.png'});
+            prizes.push({value: '112', image: 'https://raw.githubusercontent.com/zsecre/https-zsecre.github.io/refs/heads/diamond-spin-game/Untitled92_20250721071441.png'});
         } else {
-            prizes.push({value: '5', image: 'https://cdn1.codashop.com/S/content/common/images/denom-image/MLBB/150x150/10_MLBB_NewDemom.png'});
+            prizes.push({value: '5', image: 'https://raw.githubusercontent.com/zsecre/https-zsecre.github.io/refs/heads/diamond-spin-game/Untitled92_20250721071430.png'});
         }
     }
 
