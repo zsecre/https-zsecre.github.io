@@ -25,7 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const mlbbIdInput = document.getElementById('mlbb-id');
     const zoneIdInput = document.getElementById('zone-id');
     const userIcon = document.getElementById('user-icon');
-    const spinChanceDisplay = document.getElementById('spin-chance');
+    const sideNav = document.getElementById('side-nav');
+    const closeNavBtn = document.querySelector('.close-nav-btn');
+    const userMlbbId = document.getElementById('user-mlbb-id');
+    const userZoneId = document.getElementById('user-zone-id');
+    const historyToggle = document.getElementById('history-toggle');
+    const historyContent = document.getElementById('history-content');
+    const logoutButton = document.getElementById('logout-button');
 
     let currentUser = null;
 
@@ -54,10 +60,25 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateUserStatus() {
         if (currentUser) {
             userIcon.style.color = '#4CAF50'; // Green when logged in
-            spinChanceDisplay.textContent = `Spins left: ${currentUser.spinChance}`;
+            spinButton.textContent = `Spin ${currentUser.spinChance}`;
+            userMlbbId.textContent = currentUser.mlbbId;
+            userZoneId.textContent = currentUser.zoneId;
+            populateHistory();
         } else {
             userIcon.style.color = 'white'; // Default color
-            spinChanceDisplay.textContent = '';
+            spinButton.textContent = 'Spin';
+            sideNav.style.width = '0';
+        }
+    }
+
+    function populateHistory() {
+        historyContent.innerHTML = '';
+        if (currentUser && currentUser.history) {
+            currentUser.history.forEach(item => {
+                const p = document.createElement('p');
+                p.textContent = `${item.result} - ${new Date(item.date).toLocaleDateString()}`;
+                historyContent.appendChild(p);
+            });
         }
     }
 
@@ -98,6 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             alert('You have no spins left!');
         }
+    });
+
+    logoutButton.addEventListener('click', () => {
+        currentUser = null;
+        updateUserStatus();
     });
 
     async function spin() {
@@ -155,6 +181,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target == prizeModal || event.target == loginModal) {
             prizeModal.style.display = 'none';
             loginModal.style.display = 'none';
+        }
+    });
+
+    userIcon.addEventListener('click', () => {
+        if (currentUser) {
+            sideNav.style.width = '250px';
+        }
+    });
+
+    closeNavBtn.addEventListener('click', () => {
+        sideNav.style.width = '0';
+    });
+
+    historyToggle.addEventListener('click', () => {
+        if (historyContent.style.display === 'block') {
+            historyContent.style.display = 'none';
+        } else {
+            historyContent.style.display = 'block';
         }
     });
 

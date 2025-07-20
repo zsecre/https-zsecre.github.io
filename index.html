@@ -11,9 +11,21 @@
     <header>
         <div class="user-status">
             <i class="fas fa-user-circle" id="user-icon"></i>
-            <span id="spin-chance"></span>
         </div>
     </header>
+
+    <div id="side-nav" class="side-nav">
+        <a href="javascript:void(0)" class="close-nav-btn">&times;</a>
+        <div id="user-info">
+            <p>MLBB ID: <span id="user-mlbb-id"></span></p>
+            <p>Zone ID: <span id="user-zone-id"></span></p>
+            <div class="history-container">
+                <a href="javascript:void(0)" id="history-toggle">History</a>
+                <div id="history-content" class="history-content"></div>
+            </div>
+            <button id="logout-button">Logout</button>
+        </div>
+    </div>
 
     <div class="game-container">
         <h1>Mobile Legends Diamond Spin</h1>
