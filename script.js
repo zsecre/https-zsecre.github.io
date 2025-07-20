@@ -38,13 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const prizes = [];
     for (let i = 1; i <= 25; i++) {
         if (i === 13) {
-            prizes.push({value: '1163', image: 'https://raw.githubusercontent.com/zsecre/https-zsecre.github.io/refs/heads/diamond-spin-game/Untitled92_20250721071457.png'});
+            prizes.push({value: '1163', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/1163.png'});
         } else if (i % 2 === 0) {
             prizes.push({value: 'X'});
         } else if (i % 5 === 0) {
-            prizes.push({value: '112', image: 'https://raw.githubusercontent.com/zsecre/https-zsecre.github.io/refs/heads/diamond-spin-game/Untitled92_20250721071441.png'});
+            prizes.push({value: '112', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/112.png'});
         } else {
-            prizes.push({value: '5', image: 'https://raw.githubusercontent.com/zsecre/https-zsecre.github.io/refs/heads/diamond-spin-game/Untitled92_20250721071430.png'});
+            prizes.push({value: '5', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/5.png'});
         }
     }
 
