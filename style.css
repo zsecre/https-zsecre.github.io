@@ -91,12 +91,11 @@ h1 {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 5px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
     width: 90%;
     max-width: 600px;
     margin: 2rem auto;
-    aspect-ratio: 1 / 1;
 }
 
 .grid-item {
@@ -111,7 +110,8 @@ h1 {
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 1rem;
-    aspect-ratio: 1 / 1;
+    width: 100px;
+    height: 100px;
 }
 
 .grid-item img {
