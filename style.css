@@ -116,6 +116,12 @@ h1 {
     background-color: #ffc107;
 }
 
+.grid-item.x-prize {
+    color: red;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
 #spin-button {
     padding: 1rem 2rem;
     font-size: 1.2rem;

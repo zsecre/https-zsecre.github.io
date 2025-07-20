@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (i === 13) {
             prizes.push('1163');
         } else if (i % 2 === 0) {
-            prizes.push('Better luck next time');
+            prizes.push('X');
         } else if (i % 5 === 0) {
             prizes.push('112');
         } else {
@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const item = document.createElement('div');
             item.classList.add('grid-item');
             item.textContent = prizes[i];
+            if (prizes[i] === 'X') {
+                item.classList.add('x-prize');
+            }
             gridContainer.appendChild(item);
         }
     }
@@ -162,9 +165,12 @@ document.addEventListener('DOMContentLoaded', () => {
             squares.forEach(square => square.classList.remove('active'));
             squares[winningIndex].classList.add('active');
             setTimeout(() => {
-                if (winningPrize === 'Better luck next time') {
-                    prizeMessage.textContent = winningPrize;
+                const prizeModalTitle = prizeModal.querySelector('h2');
+                if (winningPrize === 'X') {
+                    prizeModalTitle.textContent = 'Oops!';
+                    prizeMessage.textContent = 'Better luck next time';
                 } else {
+                    prizeModalTitle.textContent = 'Congratulations!';
                     prizeMessage.textContent = `You won ${winningPrize} diamonds!`;
                 }
                 prizeModal.style.display = 'block';
