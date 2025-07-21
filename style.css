@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #0c1a3e;
     text-align: center;
 }
 
@@ -10,7 +10,10 @@ header {
     display: flex;
     justify-content: flex-end;
     padding: 1rem;
-    background-color: #333;
+    background-image: url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/arlot.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: 110px;
     color: white;
 }
 
