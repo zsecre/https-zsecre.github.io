@@ -24,31 +24,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginButton = document.getElementById('login-button');
     const mlbbIdInput = document.getElementById('mlbb-id');
     const zoneIdInput = document.getElementById('zone-id');
+    const hokIdInput = document.getElementById('hok-id');
     const userIcon = document.getElementById('user-icon');
     const sideNav = document.getElementById('side-nav');
     const closeNavBtn = document.querySelector('.close-nav-btn');
     const userMlbbId = document.getElementById('user-mlbb-id');
     const userZoneId = document.getElementById('user-zone-id');
+    const userHokId = document.getElementById('user-hok-id');
     const historyToggle = document.getElementById('history-toggle');
     const historyContent = document.getElementById('history-content');
     const logoutButton = document.getElementById('logout-button');
+    const mlbbIcon = document.getElementById('mlbb-icon');
+    const hokIcon = document.getElementById('hok-icon');
+    const gameTitle = document.getElementById('game-title');
+    const loginTitle = document.getElementById('login-title');
+    const mlbbLogin = document.getElementById('mlbb-login');
+    const hokLogin = document.getElementById('hok-login');
+    const header = document.querySelector('header');
 
     let currentUser = null;
+    let selectedGame = 'mlbb';
 
-    const prizes = [];
+    const mlbbPrizes = [];
     for (let i = 1; i <= 25; i++) {
         if (i === 13) {
-            prizes.push({value: '1163', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/1163.png'});
+            mlbbPrizes.push({value: '1163', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/1163.png'});
         } else if (i % 2 === 0) {
-            prizes.push({value: 'X'});
+            mlbbPrizes.push({value: 'X'});
         } else if (i % 5 === 0) {
-            prizes.push({value: '112', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/112.png'});
+            mlbbPrizes.push({value: '112', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/112.png'});
         } else {
-            prizes.push({value: '5', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/5.png'});
+            mlbbPrizes.push({value: '5', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/5.png'});
         }
     }
 
+    const hokPrizes = [];
+    for (let i = 1; i <= 25; i++) {
+        if (i === 13) {
+            hokPrizes.push({value: '1440', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/1440.png'});
+        } else if (i % 2 === 0) {
+            hokPrizes.push({value: 'X'});
+        } else if (i % 5 === 0) {
+            hokPrizes.push({value: '288', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/288.png'});
+        } else {
+            hokPrizes.push({value: '32', image: 'https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/32.png'});
+        }
+    }
+
+    let prizes = mlbbPrizes;
+
     function createGrid() {
+        gridContainer.innerHTML = '';
         for (let i = 0; i < 25; i++) {
             const item = document.createElement('div');
             item.classList.add('grid-item');
@@ -56,14 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.textContent = 'X';
                 item.classList.add('x-prize');
             } else {
-                if (prizes[i].value === '1163') {
+                if (prizes[i].value === '1163' || prizes[i].value === '1440') {
                     item.classList.add('premium-prize');
                 }
                 const img = document.createElement('img');
                 img.src = prizes[i].image;
                 item.appendChild(img);
                 const p = document.createElement('p');
-                p.innerHTML = `<b>${prizes[i].value} Diamonds</b>`;
+                p.innerHTML = `<b>${prizes[i].value} ${selectedGame === 'mlbb' ? 'Diamonds' : 'Tokens'}</b>`;
                 item.appendChild(p);
             }
             gridContainer.appendChild(item);
@@ -72,13 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateUserStatus() {
         if (currentUser) {
-            userIcon.style.color = '#4CAF50'; // Green when logged in
+            userIcon.style.color = '#4CAF50';
             spinButton.textContent = `Spin ${currentUser.spinChance}`;
-            userMlbbId.textContent = currentUser.mlbbId;
-            userZoneId.textContent = currentUser.zoneId;
+            userMlbbId.textContent = currentUser.mlbbId || '';
+            userZoneId.textContent = currentUser.zoneId || '';
+            userHokId.textContent = currentUser.hokId || '';
             populateHistory();
         } else {
-            userIcon.style.color = 'white'; // Default color
+            userIcon.style.color = 'white';
             spinButton.textContent = 'Spin';
             sideNav.style.width = '0';
         }
@@ -117,20 +144,27 @@ document.addEventListener('DOMContentLoaded', () => {
     loginButton.addEventListener('click', () => {
         const mlbbId = mlbbIdInput.value.trim();
         const zoneId = zoneIdInput.value.trim();
+        const hokId = hokIdInput.value.trim();
+        let userId = selectedGame === 'mlbb' ? mlbbId : hokId;
 
-        if (mlbbId && zoneId) {
-            const userRef = db.collection('users').doc(mlbbId);
+        if(userId) {
+            const userRef = db.collection('users').doc(userId);
             userRef.get().then((doc) => {
                 if (doc.exists) {
                     currentUser = doc.data();
-                    currentUser.mlbbId = mlbbId;
+                    currentUser.id = userId;
                 } else {
                     currentUser = {
-                        mlbbId: mlbbId,
-                        zoneId: zoneId,
+                        id: userId,
                         spinChance: 3,
                         history: []
                     };
+                    if(selectedGame === 'mlbb') {
+                        currentUser.mlbbId = mlbbId;
+                        currentUser.zoneId = zoneId;
+                    } else {
+                        currentUser.hokId = hokId;
+                    }
                     userRef.set(currentUser);
                 }
                 loginModal.style.display = 'none';
@@ -139,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Error getting document:", error);
             });
         } else {
-            alert('Please enter a valid MLBB ID and Zone ID.');
+             alert('Please enter a valid ID.');
         }
     });
 
@@ -175,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentUser.history.pop();
         }
 
-        db.collection('users').doc(currentUser.mlbbId).update({
+        db.collection('users').doc(currentUser.id).update({
             spinChance: currentUser.spinChance,
             history: currentUser.history
         });
@@ -200,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     prizeMessage.textContent = 'Better luck next time';
                 } else {
                     prizeModalTitle.textContent = 'Congratulations!';
-                    prizeMessage.textContent = `You won ${winningPrize} diamonds!`;
+                    prizeMessage.textContent = `You won ${winningPrize} ${selectedGame === 'mlbb' ? 'Diamonds' : 'Tokens'}!`;
                 }
                 prizeModal.style.display = 'block';
                 spinButton.disabled = false;
@@ -236,6 +270,35 @@ document.addEventListener('DOMContentLoaded', () => {
             historyContent.style.display = 'block';
         }
     });
+
+    function switchGame(game) {
+        selectedGame = game;
+        if(game === 'mlbb') {
+            header.style.backgroundImage = "url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/arlot.jpeg')";
+            gameTitle.textContent = 'Mobile Legends Diamond Spin';
+            loginTitle.textContent = 'Login to MLBB';
+            mlbbLogin.style.display = 'block';
+            hokLogin.style.display = 'none';
+            prizes = mlbbPrizes;
+            mlbbIcon.classList.add('active-game');
+            hokIcon.classList.remove('active-game');
+        } else {
+            header.style.backgroundImage = "url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/ying.jpeg')";
+            gameTitle.textContent = 'Honor of Kings Token Spin';
+            loginTitle.textContent = 'Login to HOK';
+            mlbbLogin.style.display = 'none';
+            hokLogin.style.display = 'block';
+            prizes = hokPrizes;
+            hokIcon.classList.add('active-game');
+            mlbbIcon.classList.remove('active-game');
+        }
+        createGrid();
+        currentUser = null;
+        updateUserStatus();
+    }
+
+    mlbbIcon.addEventListener('click', () => switchGame('mlbb'));
+    hokIcon.addEventListener('click', () => switchGame('hok'));
 
     createGrid();
     updateUserStatus();

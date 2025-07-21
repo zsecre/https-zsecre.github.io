@@ -3,22 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Legends Diamond Spin</title>
+    <title>Mobaspin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/zsecre/victoreum/main/mobaspin-logo.png" alt="Mobaspin Logo">
+        </div>
         <div class="user-status">
             <i class="fas fa-user-circle" id="user-icon"></i>
         </div>
     </header>
+
+    <div class="game-selection">
+        <h2>Select a game to spin</h2>
+        <div class="game-icons">
+            <img src="https://raw.githubusercontent.com/zsecre/victoreum/main/mlbb-logo.png" alt="Mobile Legends" id="mlbb-icon" class="game-icon active-game">
+            <img src="https://raw.githubusercontent.com/zsecre/victoreum/main/hok-logo.png" alt="Honor of Kings" id="hok-icon" class="game-icon">
+        </div>
+    </div>
 
     <div id="side-nav" class="side-nav">
         <a href="javascript:void(0)" class="close-nav-btn">&times;</a>
         <div id="user-info">
             <p>MLBB ID: <span id="user-mlbb-id"></span></p>
             <p>Zone ID: <span id="user-zone-id"></span></p>
+            <p>HOK ID: <span id="user-hok-id"></span></p>
             <div class="history-container">
                 <a href="javascript:void(0)" id="history-toggle">History</a>
                 <div id="history-content" class="history-content"></div>
@@ -28,16 +40,21 @@
     </div>
 
     <div class="game-container">
-        <h1>Mobile Legends Diamond Spin</h1>
+        <h1 id="game-title">Mobile Legends Diamond Spin</h1>
         <div class="grid-container" id="grid-container"></div>
         <button id="spin-button">Spin</button>
     </div>
 
     <div id="login-modal" class="modal">
         <div class="modal-content">
-            <h2>Login</h2>
-            <input type="number" id="mlbb-id" placeholder="MLBB ID">
-            <input type="number" id="zone-id" placeholder="Zone ID">
+            <h2 id="login-title">Login</h2>
+            <div id="mlbb-login">
+                <input type="number" id="mlbb-id" placeholder="MLBB ID">
+                <input type="number" id="zone-id" placeholder="Zone ID">
+            </div>
+            <div id="hok-login" style="display: none;">
+                <input type="number" id="hok-id" placeholder="HOK ID">
+            </div>
             <button id="login-button">Login</button>
         </div>
     </div>
@@ -45,7 +62,7 @@
     <div id="prize-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h2>Congratulations!</h2>
+            <h2 id="prize-title">Congratulations!</h2>
             <p id="prize-message"></p>
         </div>
     </div>

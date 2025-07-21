@@ -4,22 +4,50 @@ body {
     padding: 0;
     background-color: #0c1a3e;
     text-align: center;
+    color: white;
 }
 
 header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem;
     background-image: url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/arlot.jpeg');
     background-size: cover;
     background-position: center;
     height: 110px;
-    color: white;
+}
+
+.logo img {
+    height: 50px;
 }
 
 .user-status i {
     font-size: 2rem;
     cursor: pointer;
+}
+
+.game-selection {
+    padding: 1rem;
+}
+
+.game-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.game-icon {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    border-radius: 10px;
+}
+
+.game-icon.active-game {
+    border-color: #ffc107;
 }
 
 .side-nav {
@@ -127,6 +155,7 @@ h1 {
     transition: background-color 0.3s;
     font-size: 0.8rem;
     aspect-ratio: 1 / 1;
+    color: black;
 }
 
 .grid-item img {
@@ -181,6 +210,7 @@ h1 {
     max-width: 500px;
     text-align: center;
     border-radius: 5px;
+    color: black;
 }
 
 .modal-content input {
