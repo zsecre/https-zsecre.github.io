@@ -71,6 +71,11 @@ header {
     margin-top: 1rem;
 }
 
+#game-description {
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
 .side-nav {
     height: 100%;
     width: 0;

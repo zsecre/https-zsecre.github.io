@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const mlbbIcon = document.getElementById('mlbb-icon');
     const hokIcon = document.getElementById('hok-icon');
     const gameTitle = document.getElementById('game-title');
+    const gameDescription = document.getElementById('game-description');
     const loginTitle = document.getElementById('login-title');
     const mlbbLogin = document.getElementById('mlbb-login');
     const hokLogin = document.getElementById('hok-login');
@@ -278,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(game === 'mlbb') {
             gameSelectionContainer.style.backgroundImage = "url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/arlot.jpeg')";
             gameTitle.textContent = 'Mobile Legends Diamond Spin';
+            gameDescription.textContent = 'Spin to win Mobile Legends: Bang Bang Diamonds for free (3 free spins per day).';
             loginTitle.textContent = 'Login to MLBB';
             mlbbLogin.style.display = 'block';
             hokLogin.style.display = 'none';
@@ -287,6 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             gameSelectionContainer.style.backgroundImage = "url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/ying.jpeg')";
             gameTitle.textContent = 'Honor of Kings Token Spin';
+            gameDescription.textContent = 'Spin to win Honor of Kings Tokens for free (3 free spins per day).';
             loginTitle.textContent = 'Login to HOK';
             mlbbLogin.style.display = 'none';
             hokLogin.style.display = 'block';
