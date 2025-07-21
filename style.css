@@ -67,8 +67,21 @@ header {
     padding-left: 20px;
 }
 
-.history-content p {
-    font-size: 14px;
+.history-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.history-content th, .history-content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.history-content th {
+    background-color: #4CAF50;
+    color: white;
 }
 
 #logout-button {
