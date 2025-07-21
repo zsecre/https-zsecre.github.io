@@ -146,9 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const zoneId = zoneIdInput.value.trim();
         const hokId = hokIdInput.value.trim();
         let userId = selectedGame === 'mlbb' ? mlbbId : hokId;
+        let collection = selectedGame === 'mlbb' ? 'mlbb_users' : 'hok_users';
 
         if(userId) {
-            const userRef = db.collection('users').doc(userId);
+            const userRef = db.collection(collection).doc(userId);
             userRef.get().then((doc) => {
                 if (doc.exists) {
                     currentUser = doc.data();
@@ -209,7 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
             currentUser.history.pop();
         }
 
-        db.collection('users').doc(currentUser.id).update({
+        let collection = selectedGame === 'mlbb' ? 'mlbb_users' : 'hok_users';
+        db.collection(collection).doc(currentUser.id).update({
             spinChance: currentUser.spinChance,
             history: currentUser.history
         });
