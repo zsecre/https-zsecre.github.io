@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
             userRef.get().then((doc) => {
                 if (doc.exists) {
                     currentUser = doc.data();
-                    currentUser.id = userId;
+                    currentUser.id = doc.id;
                 } else {
                     currentUser = {
                         id: userId,
