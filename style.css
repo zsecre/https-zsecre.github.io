@@ -195,9 +195,13 @@ h1 {
 
 @media (max-width: 600px) {
     .grid-container {
-        width: 95%;
+        width: 100%;
+        gap: 2px;
     }
     .grid-item {
-        font-size: 0.8rem;
+        font-size: 0.6rem;
+    }
+    .game-container {
+        padding: 0.5rem;
     }
 }
