@@ -305,6 +305,5 @@ document.addEventListener('DOMContentLoaded', () => {
     mlbbIcon.addEventListener('click', () => switchGame('mlbb'));
     hokIcon.addEventListener('click', () => switchGame('hok'));
 
-    createGrid();
-    updateUserStatus();
+    switchGame('mlbb');
 });
