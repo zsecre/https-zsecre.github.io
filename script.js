@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginTitle = document.getElementById('login-title');
     const mlbbLogin = document.getElementById('mlbb-login');
     const hokLogin = document.getElementById('hok-login');
-    const header = document.querySelector('header');
+    const gameSelectionContainer = document.getElementById('game-selection-container');
 
     let currentUser = null;
     let selectedGame = 'mlbb';
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchGame(game) {
         selectedGame = game;
         if(game === 'mlbb') {
-            header.style.backgroundImage = "url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/arlot.jpeg')";
+            gameSelectionContainer.style.backgroundImage = "url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/arlot.jpeg')";
             gameTitle.textContent = 'Mobile Legends Diamond Spin';
             loginTitle.textContent = 'Login to MLBB';
             mlbbLogin.style.display = 'block';
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mlbbIcon.classList.add('active-game');
             hokIcon.classList.remove('active-game');
         } else {
-            header.style.backgroundImage = "url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/ying.jpeg')";
+            gameSelectionContainer.style.backgroundImage = "url('https://raw.githubusercontent.com/zsecre/victoreum/refs/heads/main/ying.jpeg')";
             gameTitle.textContent = 'Honor of Kings Token Spin';
             loginTitle.textContent = 'Login to HOK';
             mlbbLogin.style.display = 'none';
