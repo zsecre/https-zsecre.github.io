@@ -56,6 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.textContent = 'X';
                 item.classList.add('x-prize');
             } else {
+                if (prizes[i].value === '1163') {
+                    item.classList.add('premium-prize');
+                }
                 const img = document.createElement('img');
                 img.src = prizes[i].image;
                 item.appendChild(img);
