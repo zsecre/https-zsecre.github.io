@@ -278,3 +278,28 @@ header {
         padding: 0.5rem;
     }
 }
+
+.faq-section {
+    padding: 2rem 1rem;
+}
+
+.faq {
+    margin-bottom: 1rem;
+}
+
+footer {
+    background-color: #000;
+    padding: 1rem;
+    color: white;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer p {
+    margin-top: 1rem;
+    font-size: 0.8rem;
+}
