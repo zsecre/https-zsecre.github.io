@@ -101,9 +101,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentUser) {
             userIcon.style.color = '#4CAF50';
             spinButton.textContent = `Spin ${currentUser.spinChance}`;
-            userMlbbId.textContent = currentUser.mlbbId || '';
-            userZoneId.textContent = currentUser.zoneId || '';
-            userHokId.textContent = currentUser.hokId || '';
+            if (selectedGame === 'mlbb') {
+                userMlbbId.parentElement.style.display = 'block';
+                userZoneId.parentElement.style.display = 'block';
+                userHokId.parentElement.style.display = 'none';
+                userMlbbId.textContent = currentUser.mlbbId || '';
+                userZoneId.textContent = currentUser.zoneId || '';
+            } else {
+                userMlbbId.parentElement.style.display = 'none';
+                userZoneId.parentElement.style.display = 'none';
+                userHokId.parentElement.style.display = 'block';
+                userHokId.textContent = currentUser.hokId || '';
+            }
             populateHistory();
         } else {
             userIcon.style.color = 'white';
@@ -131,7 +140,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td');
                 const td2 = document.createElement('td');
-                td1.textContent = item.result;
+                if (item.result === 'X') {
+                    td1.textContent = 'Loss';
+                } else {
+                    td1.textContent = `Win (${item.result} ${selectedGame === 'mlbb' ? 'Diamonds' : 'Tokens'})`;
+                }
                 td2.textContent = new Date(item.date).toLocaleDateString();
                 tr.appendChild(td1);
                 tr.appendChild(td2);
