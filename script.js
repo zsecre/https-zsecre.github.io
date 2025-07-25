@@ -130,24 +130,31 @@ document.addEventListener('DOMContentLoaded', () => {
             const tr = document.createElement('tr');
             const th1 = document.createElement('th');
             const th2 = document.createElement('th');
+            const th3 = document.createElement('th');
             th1.textContent = 'Result';
             th2.textContent = 'Date';
+            th3.textContent = 'Status';
             tr.appendChild(th1);
             tr.appendChild(th2);
+            tr.appendChild(th3);
             thead.appendChild(tr);
             table.appendChild(thead);
             currentUser.history.forEach(item => {
                 const tr = document.createElement('tr');
                 const td1 = document.createElement('td');
                 const td2 = document.createElement('td');
+                const td3 = document.createElement('td');
                 if (item.result === 'X') {
                     td1.textContent = 'Loss';
+                    td3.textContent = 'No reward';
                 } else {
                     td1.textContent = `Win (${item.result} ${selectedGame === 'mlbb' ? 'Diamonds' : 'Tokens'})`;
+                    td3.textContent = 'Processing';
                 }
-                td2.textContent = new Date(item.date).toLocaleDateString();
+                td2.textContent = new Date(item.date).toLocaleString();
                 tr.appendChild(td1);
                 tr.appendChild(td2);
+                tr.appendChild(td3);
                 tbody.appendChild(tr);
             });
             table.appendChild(tbody);
