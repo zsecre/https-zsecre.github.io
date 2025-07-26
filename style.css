@@ -134,6 +134,7 @@ header {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
+    font-size: 0.8rem;
 }
 
 .history-content th {
